@@ -1,7 +1,7 @@
 # spring-on-the-web
 ### How to setup a SpringMVC-based web app with SpringBoot?
 
-#### Preparing for Spring Boot  
+#### 1. Preparing for Spring Boot  
 
 By default, Spring Boot 1.3.2.RELEASE requires Java 7 and Spring Framework 4.1.5 or above. Spring Boot can be used with "classic" Java development tools or installed as a command line tool. Regardless, we will need Java SDK v1.6 or higher:    
 
@@ -19,10 +19,19 @@ We also need Maven:
 >Default locale: en_US, platform encoding: UTF-8  
 >OS name: "linux", version: "3.13.0-40-generic", arch: "amd64", family: "unix"  
 
-#### POM and dependencies  
+#### 2. POM and dependencies  
 First we want to set up a basic build script.
 
 Though we can use any build system we like when building apps with Spring, in this section we'll use Maven following [Developing your first Spring Boot application](https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started-first-application.html).  
+
+Or run this command to create web app by maven directly:  
+
+```
+mvn archetype:create 
+  -DgroupId=[your project's group id]
+  -DartifactId=[your project's artifact id]
+  -DarchetypeArtifactId=maven-archetype-webapp
+```
 
 We need to start by creating a Maven **pom.xml** file. The **pom.xml** is the recipe that will be used to build our project.
 
@@ -127,7 +136,7 @@ $ mvn dependency:tree
 ``` 
 We can see that there are now a number of additional dependencies, including the Tomcat web server and Spring Boot itself.  
 
-#### Code  
+#### 3. Code  
 To finish our application we need to create a single Java file.
 
 Maven will compile sources from **src/main/java** by default so we need to create that folder structure, then add a file named **src/main/java/Example.java**:
@@ -186,7 +195,7 @@ SpringApplication will bootstrap our application, starting Spring which will in 
 
 We need to pass **Example.class** as an argument to the run method to tell **SpringApplication** which is the primary Spring component. The args array is also passed through to expose any command-line arguments.
 
-#### Run  
+#### 4. Run  
 At this point our application should work.
 
 Since we have used the **spring-boot-starter-parent** POM we have a useful run goal that we can use to start the application. From the root project directory to start the application using **mvn spring-boot:run**:  
