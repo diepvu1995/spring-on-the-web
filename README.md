@@ -141,6 +141,9 @@ To finish our application we need to create a single Java file.
 
 Maven will compile sources from **src/main/java** by default so we need to create that folder structure, then add a file named **src/main/java/Example.java**:
 
+
+Can't add Anotation as: RestController, EnableAutoConfiguration, RequestMapping
+
 ```java  
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
