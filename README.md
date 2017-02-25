@@ -1,23 +1,26 @@
 # spring-on-the-web
 ### How to setup a SpringMVC-based web app with SpringBoot?
 
+### Env
+Windows 10
+
 #### 1. Preparing for Spring Boot  
 
 By default, Spring Boot 1.3.2.RELEASE requires Java 7 and Spring Framework 4.1.5 or above. Spring Boot can be used with "classic" Java development tools or installed as a command line tool. Regardless, we will need Java SDK v1.6 or higher:    
 
 >$ java -version  
->java version "1.7.0_79"  
->OpenJDK Runtime Environment (IcedTea 2.5.6) (7u79-2.5.6-0ubuntu1.14.04.1)  
->OpenJDK 64-Bit Server VM (build 24.79-b02, mixed mode)  
+>java version "1.8.0_102"
+>Java(TM) SE Runtime Environment (build 1.8.0_102-b14)
+>Java HotSpot(TM) 64-Bit Server VM (build 25.102-b14, mixed mode)  
 
 We also need Maven:  
 >$ mvn -v  
->Apache Maven 3.2.5  
->Maven home: /home/k/java/apache-maven-3.2.5  
->Java version: 1.7.0_79, vendor: Oracle Corporation  
->Java home: /usr/lib/jvm/java-7-openjdk-amd64/jre  
->Default locale: en_US, platform encoding: UTF-8  
->OS name: "linux", version: "3.13.0-40-generic", arch: "amd64", family: "unix"  
+>Apache Maven 3.3.9 (bb52d8502b132ec0a5a3f4c09453c07478323dc5; 2015-11-10T23:41:47+07:00)
+>Maven home: D:\projects\on-boarding\tools\apache-maven-3.3.9
+>Java version: 1.8.0_102, vendor: Oracle Corporation
+>Java home: D:\projects\on-boarding\tools\jdk1.8.0_102\jre
+>Default locale: en_US, platform encoding: Cp1252
+>OS name: "windows 10", version: "10.0", arch: "amd64", family: "dos"  
 
 #### 2. POM and dependencies  
 First we want to set up a basic build script.
@@ -27,7 +30,7 @@ Though we can use any build system we like when building apps with Spring, in th
 Or run this command to create web app by maven directly:  
 
 ```
-mvn archetype:create 
+mvn archetype:generate 
   -DgroupId=[your project's group id]
   -DartifactId=[your project's artifact id]
   -DarchetypeArtifactId=maven-archetype-webapp
@@ -136,7 +139,17 @@ $ mvn dependency:tree
 ``` 
 We can see that there are now a number of additional dependencies, including the Tomcat web server and Spring Boot itself.  
 
-#### 3. Code  
+Run the following commands to install your dependencies
+```
+mvn install
+```
+
+Update your Eclipse classpath if you intend to develope by Eclipse
+```
+mvn eclipse:eclipse
+```
+
+#### 3. Code  
 To finish our application we need to create a single Java file.
 
 Maven will compile sources from **src/main/java** by default so we need to create that folder structure, then add a file named **src/main/java/Example.java**:
