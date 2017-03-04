@@ -1,20 +1,21 @@
-package controllers;
-
-import models.SpittleRepository;
+package springmvc.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import springmvc.models.repository.ISpittleRepository;
 
 @Controller
 @RequestMapping("/spittles")
 public class SpittleController {
-	private SpittleRepository spittleRepository;
+	private ISpittleRepository spittleRepository;
 
 	@Autowired
-	public SpittleController(SpittleRepository spittleRepository) {
+	public SpittleController(ISpittleRepository spittleRepository) {
 		this.spittleRepository = spittleRepository;
 	}
 
@@ -24,4 +25,12 @@ public class SpittleController {
 				spittleRepository.findSpittles(Long.MAX_VALUE, 20));
 		return "spittles";
 	}
+
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public String showSpittle(@RequestParam("spittle_id") long spittleId,
+			Model model) {
+		model.addAttribute(spittleRepository.findOne(spittleId));
+		return "spittle";
+	}
+
 }
