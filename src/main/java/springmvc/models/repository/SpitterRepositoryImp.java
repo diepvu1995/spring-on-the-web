@@ -9,14 +9,13 @@ public class SpitterRepositoryImp implements ISpitterRepository {
 
 	@Override
 	public Spitter save(Spitter spitter) {
-		// TODO Auto-generated method stub
+		System.out.println("save " + spitter.getUsername());
 		return null;
 	}
 
 	@Override
 	public Spitter findByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Spitter(1L, "aaaa", "123456", "asassss", "bbbbbb");
 	}
 
 }
