@@ -11,7 +11,8 @@
 </head>
 <body>
 	<h1>Welcome to Spittr</h1>
-	<a href="<c:url value="/spittles?max=238900&count=15" />">Spittles</a> |
+	<a href="<c:url value="/spittles?max=238900&count=30" />">Spittles</a>|
+	<a href="<c:url value="/spittles/1" />">Spittles1</a>|
 	<a href="<c:url value="/spitter/register" />">Register</a>
 </body>
 </html>

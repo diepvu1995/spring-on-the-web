@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,22 +17,24 @@ import springmvc.models.repository.ISpittleRepository;
 @RequestMapping("/spittles")
 public class SpittleController {
 	private ISpittleRepository spittleRepository;
+	private static final String MAX_LONG_AS_STRING = "9223372036854775807";
 
 	@Autowired
 	public SpittleController(ISpittleRepository spittleRepository) {
 		this.spittleRepository = spittleRepository;
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String spittles(Model model) {
-		model.addAttribute("personList",
-				spittleRepository.findSpittles(Long.MAX_VALUE, 20));
-		return "spittles";
-	}
+	// @RequestMapping(method = RequestMethod.GET)
+	// public String spittles(Model model) {
+	// model.addAttribute("personList",
+	// spittleRepository.findSpittles(Long.MAX_VALUE, 20));
+	// return "spittles";
+	// }
 
-	@RequestMapping(value = "/paging")
-	public List<Spittle> spittles(@RequestParam("max") long max,
-			@RequestParam("count") int count) {
+	@RequestMapping(method = RequestMethod.GET)
+	public List<Spittle> spittles(
+			@RequestParam(value = "max", defaultValue = MAX_LONG_AS_STRING) long max,
+			@RequestParam(value = "count", defaultValue = "20") int count) {
 		return spittleRepository.findSpittles(max, count);
 	}
 
@@ -42,4 +45,21 @@ public class SpittleController {
 		return "spittle";
 	}
 
+	@RequestMapping(value = "/{spittleId}", method = RequestMethod.GET)
+	public String spittle(@PathVariable long spittleId, Model model) {
+		Spittle result = spittleRepository.findOne(spittleId);
+		if (result != null) {
+			model.addAttribute("error", "");
+			model.addAttribute(result);
+		} else {
+			model.addAttribute("error", "Khong tin thay");
+		}
+		return "spittle";
+	}
+
+	@RequestMapping(value = "/test/{max}", method = RequestMethod.GET)
+	public List<Spittle> test(@PathVariable long max,
+			@RequestParam(value = "count", defaultValue = "20") int count) {
+		return spittleRepository.findSpittles(max, count);
+	}
 }

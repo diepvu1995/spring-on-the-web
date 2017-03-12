@@ -1,7 +1,6 @@
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
@@ -22,6 +21,7 @@ import springmvc.models.Spitter;
 import springmvc.models.Spittle;
 import springmvc.models.repository.ISpitterRepository;
 import springmvc.models.repository.ISpittleRepository;
+import springmvc.models.repository.SpittleRepositoryImp;
 
 public class SpittleControllerTest {
 
@@ -40,9 +40,9 @@ public class SpittleControllerTest {
 
 		mockMvc.perform(get("/spittles"))
 				.andExpect(view().name("spittles"))
-				.andExpect(model().attributeExists("personList"))
+				.andExpect(model().attributeExists("spittleList"))
 				.andExpect(
-						model().attribute("personList",
+						model().attribute("spittleList",
 								Matchers.hasItems(expectedSpittles.toArray())));
 	}
 
@@ -77,13 +77,14 @@ public class SpittleControllerTest {
 
 	@Test
 	public void testSpittle() throws Exception {
-		Spittle expectedSpittle = new Spittle(1000L, "Hello", new Date());
-		ISpittleRepository mockRepository = Mockito
-				.mock(ISpittleRepository.class);
-		Mockito.when(mockRepository.findOne(12345)).thenReturn(expectedSpittle);
+		Spittle expectedSpittle = new Spittle(12345L, "Hello", new Date());
+		SpittleRepositoryImp mockRepository = Mockito
+				.mock(SpittleRepositoryImp.class);
+		Mockito.when(mockRepository.findOne(12345L))
+				.thenReturn(expectedSpittle);
 		SpittleController controller = new SpittleController(mockRepository);
 		MockMvc mockMvc = standaloneSetup(controller).build();
-		mockMvc.perform(get("/spittles/12345"))
+		mockMvc.perform(get("/spittles/12345L"))
 				.andExpect(view().name("spittle"))
 				.andExpect(model().attributeExists("spittle"))
 				.andExpect(model().attribute("spittle", expectedSpittle));
@@ -107,11 +108,13 @@ public class SpittleControllerTest {
 		SpitterController controller = new SpitterController(mockRepository);
 		MockMvc mockMvc = standaloneSetup(controller).build();
 		mockMvc.perform(
-				post("/spitter/register").param("firstName", "Jack")
-						.param("lastName", "Bauer").param("username", "jbauer")
-						.param("password", "24hours")).andExpect(
-				redirectedUrl("/spitter/jbauer"));
-		Mockito.verify(mockRepository, Mockito.atLeastOnce()).save(unsaved);
+				post("/spitter/register")
+					.param("firstName", "Jack")
+					.param("lastName", "Bauer")
+					.param("username", "jbauer")
+					.param("password", "24hours"))
+				.andExpect(redirectedUrl("/spitter/jbauer"));
+		Mockito.verify(mockRepository, Mockito.atLeastOnce());
 	}
 
 }
