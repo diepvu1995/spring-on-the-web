@@ -18,6 +18,8 @@ public class Spitter {
 	@Size(min = 2, max = 30)
 	private String lastName;
 
+	private String email;
+
 	public Long getId() {
 		return id;
 	}
@@ -76,5 +78,13 @@ public class Spitter {
 
 	public String getUsername() {
 		return username;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

@@ -57,6 +57,18 @@ public class SpittleController {
 		return "spittle";
 	}
 
+	@RequestMapping(value = "/edit/{spittleId}", method = RequestMethod.GET)
+	public String edit(@PathVariable long spittleId) {
+		System.out.println(spittleId);
+		return "spittle";
+	}
+
+	@RequestMapping(value = "/delete/{spittleId}", method = RequestMethod.GET)
+	public List<Spittle> delete(@PathVariable long spittleId) {
+		return spittleRepository.delete(spittleId);
+
+	}
+
 	@RequestMapping(value = "/test/{max}", method = RequestMethod.GET)
 	public List<Spittle> test(@PathVariable long max,
 			@RequestParam(value = "count", defaultValue = "20") int count) {

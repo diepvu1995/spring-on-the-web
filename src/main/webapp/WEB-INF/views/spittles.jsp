@@ -14,13 +14,13 @@
 				<c:out value="${spittle.message}" />
 			</div>
 			<div>
-			<span class="spittleId"><c:out value="${spittle.id}" /></span>
-				<span class="spittleTime"><c:out value="${spittle.time}" /></span>
-				<span class="spittleLocation"> (<c:out
-						value="${spittle.latitude}" />, <c:out
-						value="${spittle.longitude}" />)
+				<span class="spittleId"><c:out value="${spittle.id}" /></span> <span
+					class="spittleTime"><c:out value="${spittle.time}" /></span> <span
+					class="spittleLocation"> (<c:out value="${spittle.latitude}" />,
+					<c:out value="${spittle.longitude}" />)
 				</span>
-			</div>
+			</div> <a href="/spittles/delete/${spittle.id }">delete</a> <a
+			href="/spittles/edit/${spittle.id}">Edit</a>
 		</li>
 	</c:forEach>
 </body>

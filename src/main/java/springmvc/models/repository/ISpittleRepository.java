@@ -9,4 +9,6 @@ public interface ISpittleRepository {
 
 	Spittle findOne(long spittleId);
 
+	List<Spittle> delete(long spittleId);
+
 }

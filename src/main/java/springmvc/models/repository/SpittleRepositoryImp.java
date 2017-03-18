@@ -39,4 +39,11 @@ public class SpittleRepositoryImp implements ISpittleRepository {
 		return spittles;
 	}
 
+	@Override
+	public List<Spittle> delete(long spittleId) {
+		// xoa mot doi tuong, co id la spittleId
+		db.removeIf(e -> e.getId() == spittleId);
+		return db;
+	}
+
 }
