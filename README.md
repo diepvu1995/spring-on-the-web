@@ -261,6 +261,68 @@ public void addResourceHandlers(ResourceHandlerRegistry registry) {
 }
 ```
 
+### 6. Add Bootstrap CSS framework + jQuery
+
+We have many ways to add css or js from Bootstrap or jQuery into our project: download the css/js files then add to our jsp/html manually, or link to CDN directly. But these kind of ways make us difficult to maintain the version of libraries.  
+
+Also, we are using Maven to manage the version of our dependencies, so we expect to manage the CSS/JS framework like as a dependency. And WebJars helps us to do that.  
+
+Here are a few advantages of WebJars:  
+
+* We can explicitly and easily manage the client-side dependencies in JVM-based web applications  
+* We can use them with any commonly used build tool, eg: Maven, Gradle, etc  
+* WebJars behave like any other Maven dependency – which means that we get transitive dependencies as well  
+
+Update pom.xml file to add neccessary WebJars dependencies, Bootstrap & jQuery:
+
+```
+<dependency>
+	<groupId>org.webjars</groupId>
+	<artifactId>bootstrap</artifactId>
+	<version>3.3.7</version>
+</dependency>
+<dependency>
+	<groupId>org.webjars</groupId>
+	<artifactId>jquery</artifactId>
+	<version>3.1.1</version>
+</dependency>
+```  
+
+Update your resourceHanlder to serve for webjars request:
+
+```
+@Override
+public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+}
+```  
+
+OK, now let add the Bootstrap navbar into our home.jsp:
+
+```
+<link rel="stylesheet"
+	href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript" src="webjars/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+```
+```
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Spittr SpringMVC App</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li><a href="<c:url value="/spittles?max=238900&count=30" />">Spittles</a></li>
+			<li><a href="<c:url value="/spittles/1" />">Spittles1</a></li>
+			<li><a href="<c:url value="/spitter/register" />">Register</a></li>
+		</ul>
+	</div>
+</nav>
+```
+
+Restart our application to see the new navbar.
+
 ### MISC  
 * You can replace
 ```
