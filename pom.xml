@@ -59,7 +59,12 @@
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
-			<version>RELEASE</version>
+			<version>3.3.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.1.1</version>
 		</dependency>
 		<!-- When devtools is running, it detects change when you recompile your 
 			application and automatically refreshes it. This works for not only resources 
@@ -80,14 +85,14 @@
 				<version>${spring.boot.version}</version>
 				<configuration>
 					<mainClass>springmvc.App</mainClass>
-	<!-- When addResources is enabled, any src/main/resources folder will be 
-		added to the application classpath when you run the application and any duplicate 
-		found in target/classes will be removed. This allows hot refreshing of resources 
-		which can be very useful when developing web applications. For example, you 
-		can work on HTML, CSS or JavaScript files and see your changes immediately 
-		without recompiling your application. It is also a helpful way of allowing 
-		your front end developers to work without needing to download and install 
-		a Java IDE. -->
+					<!-- When addResources is enabled, any src/main/resources folder will 
+						be added to the application classpath when you run the application and any 
+						duplicate found in target/classes will be removed. This allows hot refreshing 
+						of resources which can be very useful when developing web applications. For 
+						example, you can work on HTML, CSS or JavaScript files and see your changes 
+						immediately without recompiling your application. It is also a helpful way 
+						of allowing your front end developers to work without needing to download 
+						and install a Java IDE. -->
 					<addResources>true</addResources>
 				</configuration>
 			</plugin>
