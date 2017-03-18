@@ -230,5 +230,10 @@ $ mvn spring-boot:run
  ``` 
 Access your browser at [localhost:8080](localhost:8080), we can see the result: **Hello World!**  
 
-:banana::monkey:
+:banana::monkey:  
 
+### 5. Add JSP + Resourcese + Static files  
+JSP files will be put under ```src/main/webapp/WEB-INF/views/*```  
+Static resources like CSS or JS will be put under ```/src/main/resources/static/```  
+And properties files, put them under ```/src/main/resources/```  
+Because of automatic resource mapping mechanism of Spring Boot, we don' need to declare the resource mapping manually (http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc-static-content), just need to put the resources under the corresponding folders, that's all.
