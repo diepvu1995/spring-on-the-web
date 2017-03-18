@@ -144,7 +144,7 @@ Run the following commands to install your dependencies
 mvn install
 ```
 
-Update your Eclipse classpath if you intend to develope by Eclipse
+Update your Eclipse classpath if you intend to develope by Eclipse IDE
 ```
 mvn eclipse:eclipse
 ```
