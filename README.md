@@ -233,13 +233,36 @@ Access your browser at [localhost:8080](localhost:8080), we can see the result: 
 :banana::monkey:  
 
 ### 5. Add JSP + Resourcese + Static files  
-JSP files will be put under ```src/main/webapp/WEB-INF/views/*```  
-Static resources like CSS or JS will be put under ```/src/main/resources/static/```  
-And properties files, put them under ```/src/main/resources/```  
-Because of automatic resource mapping mechanism of Spring Boot, we don' need to declare the resource mapping manually (http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc-static-content), just need to put the resources under the corresponding folders, that's all.
+* JSP files should be placed under **src/main/webapp/WEB-INF/views/**.    
+* Properties files, let put them under **/src/main/resources/**.  
+* With static resources like CSS or JS, only need to put them under **/src/main/resources/**  (your build tool (Maven in this case) will attach all the content from **/src/main/resources/** in the application classpath and, as mentioned in [Spring Boot's docs](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc-static-content), all the content from a directory called **/static** (or **/public** or **/resources**) in the classpath will be served as static content).  
 
-### MISC  
-1. You can replace
+Note:  
+* As I know, SpringBoot now only serves the static resources placed in the WAR or in the file system (i.e: C:/opt/files/), I can't find a way to load the static resources in case of running as JAR. It means that you need to modify your bootstrap main class a little bit as following (to enable the WAR mode):  
+Extend your bootstrap application main class by **SpringBootServletInitializer**  
+```
+public class App extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(App.class);
+    }
+    
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(App.class, args);
+	}
+}
+```  
+* If you want to do some more advanced, you can declare your resource mapping in your WebMvcConfigurerAdapter class by overriding **addResourceHandlers()** as following:  
+```
+@Override
+public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+}
+```
+
+### MISC  
+* You can replace
 ```
 @Configuration
 @EnableAutoConfiguration
@@ -249,3 +272,4 @@ by
 ```
 @SpringBootApplication
 ```
+to get the equivalent effectation ([Using the @SpringBootApplication annotation](http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/using-boot-using-springbootapplication-annotation.html))
