@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import springmvc.models.Spitter;
 import springmvc.models.Spittle;
 import springmvc.models.repository.ISpittleRepository;
 
@@ -23,13 +24,6 @@ public class SpittleController {
 	public SpittleController(ISpittleRepository spittleRepository) {
 		this.spittleRepository = spittleRepository;
 	}
-
-	// @RequestMapping(method = RequestMethod.GET)
-	// public String spittles(Model model) {
-	// model.addAttribute("personList",
-	// spittleRepository.findSpittles(Long.MAX_VALUE, 20));
-	// return "spittles";
-	// }
 
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Spittle> spittles(
@@ -58,14 +52,17 @@ public class SpittleController {
 	}
 
 	@RequestMapping(value = "/edit/{spittleId}", method = RequestMethod.GET)
-	public String edit(@PathVariable long spittleId) {
-		System.out.println(spittleId);
-		return "spittle";
+	public String edit(@PathVariable long spittleId, Model model) {
+		Spittle spittle = spittleRepository.findOne(spittleId);
+		model.addAttribute("exitSpittle", spittle);
+		return "editSpittle";
 	}
 
 	@RequestMapping(value = "/delete/{spittleId}", method = RequestMethod.GET)
-	public List<Spittle> delete(@PathVariable long spittleId) {
-		return spittleRepository.delete(spittleId);
+	public String delete(@PathVariable long spittleId, Model model) {
+		List<Spittle> spittles = spittleRepository.delete(spittleId);
+		model.addAttribute("spittleList", spittles);
+		return "spittles";
 
 	}
 

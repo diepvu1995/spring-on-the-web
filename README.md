@@ -144,7 +144,7 @@ Run the following commands to install your dependencies
 mvn install
 ```
 
-Update your Eclipse classpath if you intend to develope by Eclipse
+Update your Eclipse classpath if you intend to develope by Eclipse IDE
 ```
 mvn eclipse:eclipse
 ```
@@ -230,5 +230,108 @@ $ mvn spring-boot:run
  ``` 
 Access your browser at [localhost:8080](localhost:8080), we can see the result: **Hello World!**  
 
-:banana::monkey:
+:banana::monkey:  
 
+### 5. Add JSP + Resourcese + Static files  
+* JSP files should be placed under **src/main/webapp/WEB-INF/views/**.    
+* Properties files, let put them under **/src/main/resources/**.  
+* With static resources like CSS or JS, only need to put them under **/src/main/resources/**  (your build tool (Maven in this case) will attach all the content from **/src/main/resources/** in the application classpath and, as mentioned in [Spring Boot's docs](http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-spring-mvc-static-content), all the content from a directory called **/static** (or **/public** or **/resources**) in the classpath will be served as static content).  
+
+Note:  
+* As I know, SpringBoot now only serves the static resources placed in the WAR or in the file system (i.e: C:/opt/files/), I can't find a way to load the static resources in case of running as JAR. It means that you need to modify your bootstrap main class a little bit as following (to enable the WAR mode):  
+Extend your bootstrap application main class by **SpringBootServletInitializer**  
+```
+public class App extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(App.class);
+    }
+    
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(App.class, args);
+	}
+}
+```  
+* If you want to do some more advanced, you can declare your resource mapping in your WebMvcConfigurerAdapter class by overriding **addResourceHandlers()** as following:  
+```
+@Override
+public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+}
+```
+
+### 6. Add Bootstrap CSS framework + jQuery
+
+We have many ways to add css or js from Bootstrap or jQuery into our project: download the css/js files then add to our jsp/html manually, or link to CDN directly. But these kind of ways make us difficult to maintain the version of libraries.  
+
+Also, we are using Maven to manage the version of our dependencies, so we expect to manage the CSS/JS framework like as a dependency. And WebJars helps us to do that.  
+
+Here are a few advantages of WebJars:  
+
+* We can explicitly and easily manage the client-side dependencies in JVM-based web applications  
+* We can use them with any commonly used build tool, eg: Maven, Gradle, etc  
+* WebJars behave like any other Maven dependency – which means that we get transitive dependencies as well  
+
+Update pom.xml file to add neccessary WebJars dependencies, Bootstrap & jQuery:
+
+```
+<dependency>
+	<groupId>org.webjars</groupId>
+	<artifactId>bootstrap</artifactId>
+	<version>3.3.7</version>
+</dependency>
+<dependency>
+	<groupId>org.webjars</groupId>
+	<artifactId>jquery</artifactId>
+	<version>3.1.1</version>
+</dependency>
+```  
+
+Update your resourceHanlder to serve for webjars request:
+
+```
+@Override
+public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+}
+```  
+
+OK, now let add the Bootstrap navbar into our home.jsp:
+
+```
+<link rel="stylesheet"
+	href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript" src="webjars/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript"
+	src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+```
+```
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Spittr SpringMVC App</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li><a href="<c:url value="/spittles?max=238900&count=30" />">Spittles</a></li>
+			<li><a href="<c:url value="/spittles/1" />">Spittles1</a></li>
+			<li><a href="<c:url value="/spitter/register" />">Register</a></li>
+		</ul>
+	</div>
+</nav>
+```
+
+Restart our application to see the new navbar.
+
+### MISC  
+* You can replace
+```
+@Configuration
+@EnableAutoConfiguration
+@ComponentScan
+```  
+by
+```
+@SpringBootApplication
+```
+to get the equivalent effectation ([Using the @SpringBootApplication annotation](http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/using-boot-using-springbootapplication-annotation.html))
