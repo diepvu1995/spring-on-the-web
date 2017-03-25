@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tiles-definitions>
+	<definition name="base" template="/WEB-INF/layout/page.jsp">
+		<put-attribute name="header" value="/WEB-INF/layout/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
+	</definition>
+
+	<definition name="home" template="/WEB-INF/layout/page.jsp">
+		<put-attribute name="header" value="/WEB-INF/layout/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+	</definition>
+
+	<definition name="registerForm" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/registerForm.jsp" />
+	</definition>
+
+	<definition name="profile" extends="base"
+		template="/WEB-INF/layout/page.jsp">
+		<put-attribute name="header" value="/WEB-INF/layout/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/profile.jsp" />
+	</definition>
+	<definition name="spittles" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/spittles.jsp" />
+	</definition>
+	<definition name="spittle" extends="base"
+		template="/WEB-INF/layout/page.jsp">
+		<put-attribute name="header" value="/WEB-INF/layout/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/spittle.jsp" />
+	</definition>
+</tiles-definitions>

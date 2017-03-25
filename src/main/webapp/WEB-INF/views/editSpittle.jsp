@@ -3,15 +3,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <html>
 <head>
 <title>Spittr</title>
-<link rel="stylesheet" type="text/css" href="../css/style.css" />
 <link rel="stylesheet" type="text/css"
 	href="<c:url value="/css/style.css" />">
-<link rel="stylesheet" type="text/css"
-	href="<c:url value="/css/main.css" />">
-
 <link rel="stylesheet"
 	href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css">
 <script type="text/javascript" src="webjars/jquery/3.1.1/jquery.min.js"></script>
@@ -35,6 +32,10 @@ Longitude: <sf:input path="longitude" value="${exitSpittle.longitude}" />
 
 
 	</sf:form>
+	<c:url value="/spitter/register" var="registerUrl" />
+	<a href="${registerUrl}">Register</a>
+	<s:url value="/spitter/register" var="registerUrl" scope="request"></s:url>
+	<a href="${registerUrl}">Register</a>
 
 </body>
 </html>

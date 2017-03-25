@@ -22,26 +22,35 @@
 		<div class="alert alert-danger">
 			<sf:errors path="*"></sf:errors>
 		</div>
-	First Name: <sf:input path="firstName" />
-		<sf:errors path="firstName" cssClass="text-error"></sf:errors>
-		<br />
-		 Last Name: <sf:input path="lastName" />
-		<sf:errors path="lastName" cssClass="text-error"></sf:errors>
-
-		<br /> 
-		Email: <sf:input path="email" type="email" />
-
-		<br />
-		 User name: <sf:input path="username" />
-		<sf:errors path="username" cssClass="text-error"></sf:errors>
-
-		<br />
-		  Password:<sf:password path="password" />
-		<sf:errors path="password" cssClass="text-error"></sf:errors>
-
-		<br />
-		<input type="submit" value="Register" />
+		<div class="form-group">
+			<label for="firstName">First Name:</label>
+			<sf:input path="firstName" class="form-control" />
+			<sf:errors path="firstName" cssClass="text-error"></sf:errors>
+		</div>
+		<div class="form-group">
+			<label for="lastName">Last Name:</label>
+			<sf:input path="lastName" class="form-control" />
+			<sf:errors path="lastName" cssClass="text-error"></sf:errors>
+		</div>
+		<div class="form-group">
+			<label for="email">Email:</label>
+			<sf:input path="email" class="form-control" />
+			<sf:errors path="email" cssClass="text-error"></sf:errors>
+		</div>
+		<div class="form-group">
+			<label for="username">User name:</label>
+			<sf:input path="username" class="form-control" />
+			<sf:errors path="username" cssClass="text-error"></sf:errors>
+		</div>
+		<div class="form-group">
+			<label for="password"> Password:</label>
+			<sf:password path="password" class="form-control"
+				placeholder="Enter password" />
+			<sf:errors path="password" cssClass="text-error"></sf:errors>
+		</div>
+		<input type="submit" class="btn btn-default" value="Register" />
 	</sf:form>
+
 	<div class="btn-group">
 		<button type="button" class="btn btn-success">This is a
 			success button</button>
