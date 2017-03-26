@@ -10,6 +10,17 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 
+
+    <link href="https://cdn.datatables.net/colreorder/1.2.0/css/colReorder.dataTables.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.datatables.net/colreorder/1.2.0/js/dataTables.colReorder.js"></script>
+<link href="https://cdn.datatables.net/select/1.0.0/css/select.dataTables.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.datatables.net/select/1.0.0/js/dataTables.select.js"></script>
+<link href="https://cdn.datatables.net/fixedheader/3.0.0/css/fixedHeader.dataTables.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.datatables.net/fixedheader/3.0.0/js/dataTables.fixedHeader.js"></script>
+
+<link href="https://cdn.datatables.net/buttons/1.0.1/css/buttons.dataTables.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.datatables.net/buttons/1.0.1/js/dataTables.buttons.js"></script>
+    
 <link href="https://cdn.datatables.net/buttons/1.0.1/css/buttons.dataTables.css" rel="stylesheet" type="text/css" />
 <script src="https://cdn.datatables.net/buttons/1.0.3/js/buttons.html5.min.js"></script>
 
@@ -20,18 +31,51 @@
 			"sAjaxSource" : "/getAllSpittles",
 			"sAjaxDataProp" : "",
 			"order" : [ [ 0, "asc" ] ],
-			"aoColumns" : [ 
-			              { "mData" : "id"},
-			              { "mData" : "message"},
-			              { "mData" : "time"}],
+			"aoColumnDefs": [ 
+			      {
+			      "aTargets": [ 0 ],
+			      "mData": "id"
+			      },
+			      {
+				  "aTargets": [ 1 ],
+				  "mData": "message"
+				  },
+				  {
+				  "aTargets": [ 2 ],
+				  "mData": "time"
+				  },
+				  {
+			       "targets": -1,
+			       "data": null,
+			       "defaultContent": "<button>Click!</button>"
+			      }
+			],
 			scrollY : "600px",
 			scrollCollapse: true,
 			dom: 'Blfrtip',
 			buttons: ['copy', 'csv', 'excel'],
 		    colReorder: true,
 		    select: true
-		})
-	});
+		});
+		
+	$('#employeesTable tbody').on( 'click', 'button', function () {
+        var data = table.row($(this).parents('tr')).data();
+        console.log(data);
+        alert( data['id']);
+    } );
+	
+	 $('#employeesTable tbody').on('click', 'tr', function () {
+	        $(this).toggleClass('selected');
+	    });
+
+	    $('#button').click(function () {
+	        var ids = $.map(table.rows('.selected').data(), function (item) {
+	            return item[0]
+	        });
+	        console.log(ids)
+	        alert(table.rows('.selected').data().length + ' row(s) selected');
+	    });
+} );
 	
 </script>
 </head>
@@ -39,6 +83,7 @@
 <body>
 	<!-- datatable start  -->
 	<h1>Employees Table</h1>
+	<button id="button">btn</button>
 	<table id="employeesTable" class="display">
 
 		<!-- Header Table -->
@@ -47,6 +92,7 @@
 				<th>Id</th>
 				<th>Message</th>
 				<th>Time</th>
+				<th>Get Message</th>
 			</tr>
 		</thead>
 		<!-- Footer Table -->
@@ -55,6 +101,7 @@
 				<th>Id</th>
 				<th>Message</th>
 				<th>Time</th>
+				<th>Get Message</th>
 			</tr>
 		</tfoot>
 	</table>
