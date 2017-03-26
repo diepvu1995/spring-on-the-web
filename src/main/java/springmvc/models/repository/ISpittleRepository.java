@@ -10,5 +10,5 @@ public interface ISpittleRepository {
 	Spittle findOne(long spittleId);
 
 	List<Spittle> delete(long spittleId);
-
+	List<Spittle> createSpittleList(int count);
 }

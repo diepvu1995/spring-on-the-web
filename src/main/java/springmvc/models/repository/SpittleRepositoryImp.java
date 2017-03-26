@@ -30,7 +30,7 @@ public class SpittleRepositoryImp implements ISpittleRepository {
 		return spittles.size() > 0 ? spittles.get(0) : null;
 	}
 
-	private List<Spittle> createSpittleList(int count) {
+	public List<Spittle> createSpittleList(int count) {
 		List<Spittle> spittles = new ArrayList<Spittle>();
 		for (int i = 0; i < count; i++) {
 			spittles.add(new Spittle(Long.valueOf(i + 1), "Spittle" + i,
